@@ -1,5 +1,4 @@
 # Multiple-Chat-Room-Communication-
-# Chat Application
 
 ## Overview
 
@@ -69,4 +68,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-If you have any questions or issues, please contact [your@email.com](mailto:your@email.com).
+If you have any questions or issues, please contact [aditig0501@email.com](mailto:aditig0501@email.com).
