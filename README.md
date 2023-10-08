@@ -56,10 +56,6 @@ Contributions are welcome! If you would like to contribute to this project, plea
 3. Make your changes and test them thoroughly.
 4. Submit a pull request with a clear description of your changes.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - [Java Socket Programming Tutorial](https://docs.oracle.com/javase/tutorial/networking/sockets/index.html) by Oracle
