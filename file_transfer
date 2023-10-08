@@ -1,0 +1,15 @@
+// Code for file transfer (simplified)
+// Server-side
+File fileToSend = new File("path/to/your/file");
+byte[] fileBytes = Files.readAllBytes(fileToSend.toPath());
+out.write(fileBytes);
+out.flush();
+
+// Client-side
+byte[] receivedFileBytes = new byte[1024];
+int bytesRead;
+FileOutputStream fileOutputStream = new FileOutputStream("received-file.txt");
+while ((bytesRead = in.read(receivedFileBytes)) != -1) {
+    fileOutputStream.write(receivedFileBytes, 0, bytesRead);
+}
+fileOutputStream.close();
