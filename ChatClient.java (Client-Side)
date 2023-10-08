@@ -1,0 +1,40 @@
+// ...
+public class ChatClient {
+    // ...
+
+    private void handleIncomingMessages() {
+        try {
+            String serverMessage;
+            while ((serverMessage = in.readLine()) != null) {
+                System.out.println(serverMessage);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ChatClient() {
+        try {
+            // ...
+
+            // Handle user input
+            while (true) {
+                System.out.print("Enter your message (or '/exit' to quit): ");
+                String message = userInput.nextLine();
+                if ("/exit".equalsIgnoreCase(message)) {
+                    sendMessage("/leave");
+                    break;
+                }
+                sendMessage(message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ...
+
+    public static void main(String[] args) {
+        ChatClient client = new ChatClient();
+    }
+}
