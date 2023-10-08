@@ -1,0 +1,45 @@
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+
+public class ChatClient {
+    // ...
+
+    private void handleUserInput() {
+        try {
+            String userInput;
+            while (true) {
+                System.out.print("Enter your message (or '/exit' to quit): ");
+                userInput = userInputScanner.nextLine();
+                if ("/exit".equalsIgnoreCase(userInput)) {
+                    sendMessage("/leave");
+                    break;
+                }
+                sendMessage(userInput);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ChatClient() {
+        try {
+            // ...
+
+            // Start a separate thread to handle incoming messages
+            Thread messageReceiverThread = new Thread(this::handleIncomingMessages);
+            messageReceiverThread.start();
+
+            // Handle user input
+            handleUserInput();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ...
+
+    public static void main(String[] args) {
+        ChatClient client = new ChatClient();
+    }
+}
