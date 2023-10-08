@@ -1,0 +1,77 @@
+// ...
+public class ChatServer {
+    // ...
+    
+    // Define a protocol for messages
+    private static final String JOIN_COMMAND = "/join";
+    private static final String LEAVE_COMMAND = "/leave";
+
+    // ...
+
+    private void broadcastMessage(String message, ClientHandler sender) {
+        // Iterate through connected clients and send the message to all except the sender
+        for (ClientHandler client : clients) {
+            if (client != sender) {
+                client.sendMessage(sender.getClientName() + ": " + message);
+            }
+        }
+    }
+
+    // ...
+
+    // Inner class to handle individual TCP clients
+    private class ClientHandler implements Runnable {
+        private Socket socket;
+        private PrintWriter out;
+        private BufferedReader in;
+        private String clientName;
+
+        public ClientHandler(Socket socket) {
+            this.socket = socket;
+            try {
+                out = new PrintWriter(socket.getOutputStream(), true);
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public String getClientName() {
+            return clientName;
+        }
+
+        public void sendMessage(String message) {
+            out.println(message);
+        }
+
+        @Override
+        public void run() {
+            try {
+                // ...
+
+                String clientMessage;
+                while ((clientMessage = in.readLine()) != null) {
+                    if (clientMessage.startsWith(JOIN_COMMAND)) {
+                        // Handle join command
+                        clientName = clientMessage.substring(JOIN_COMMAND.length()).trim();
+                        broadcastMessage(clientName + " has joined the chat.", this);
+                    } else if (clientMessage.startsWith(LEAVE_COMMAND)) {
+                        // Handle leave command
+                        String leavingClientName = clientName;
+                        broadcastMessage(leavingClientName + " has left the chat.", this);
+                        clients.remove(this);
+                        socket.close();
+                        break;
+                    } else {
+                        // Broadcast regular message to all clients
+                        broadcastMessage(clientMessage, this);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // ...
+}
